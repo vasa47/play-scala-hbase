@@ -13,7 +13,7 @@ object Application extends Controller {
 
   val barsTableName = "Cars"
   val family = Bytes.toBytes("vi") // vehicle information
-  val qualifier = Bytes.toBytes("json")
+  val qualifier = Bytes.toBytes("detailsObject")  // json object of vehicle Info
   
   lazy val hbaseConfig = {
     val conf = HBaseConfiguration.create()
