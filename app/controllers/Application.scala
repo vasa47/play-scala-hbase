@@ -74,14 +74,15 @@ object Application extends Controller {
  // Function to Modify Car if exist by id.
   def modifyCar() = Action(parse.json) {  request =>
     val table = new HTable(hbaseConfig, barsTableName)
-    val rowId = request.getQueryString("carId").toString
+    val rowId = request.body.\("carId").toString()
     // Just check for the existence of the Car and Report Error if not there
     val carData = new Get(Bytes.toBytes(rowId))
     val carModifydata = table.get(carData)
+    Logger.info("car Id for the modify operation..."+rowId)
     try {
       if(!(carModifydata == null || carModifydata.isEmpty())) {
 
-        val put = new Put(Bytes.toBytes(request.getQueryString("carId").toString))
+        val put = new Put(Bytes.toBytes(request.getQueryString("name").toString))
         put.add(family, qualifier, Bytes.toBytes(request.body.toString()))
         table.put(put)
         table.close()
@@ -101,7 +102,7 @@ object Application extends Controller {
   // function to delete Car by ID
     def deleteCar() = Action(parse.json) { request =>
     val table = new HTable(hbaseConfig, barsTableName)
-    val rowId = request.getQueryString("carId").toString
+    val rowId = request.body.\("carId").toString()
     // Just check for the existence of the Car and Report Error if not there
     val carData = new Get(Bytes.toBytes(rowId))
     val carModifydata = table.get(carData)
@@ -124,7 +125,7 @@ object Application extends Controller {
   def getOneCar() = Action(parse.json) { request =>
 
     val table = new HTable(hbaseConfig, barsTableName)
-    val rowId = request.getQueryString("carId").toString
+    val rowId = request.body.\("carId").toString()
     // Just check for the existence of the Car get through scanner to return json
     val carData = new Get(Bytes.toBytes(rowId))
     val carModifydata = table.get(carData)
