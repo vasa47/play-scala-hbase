@@ -19,21 +19,6 @@ $ ->
         getBars()
         $("#carName").val("")
 
-
-    $("#editCar").submit (event) ->
-      alert("we ll get here")
-      event.preventDefault()
-      $.ajax
-        url: event.target.action
-        type: event.target.method
-        contentType: "application/json"
-        data: JSON.stringify({
-
-        })
-        success: () ->
-          getBars()
-          $("#carName").val("")
-
 getBars = () ->
   $.get "/bars", (bars) ->
     $("#bars").empty()

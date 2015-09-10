@@ -35,57 +35,7 @@
                 </form>
             </div>
         </div>
-
-        <div class="container">
-            <div class="well">
-                <h3>Modify Cars</h3>
-                <ul id="bars"></ul>
-                <hr>
-                <h3>Modify a Car</h3>
-                <form id="editCars" action="@routes.Application.editCar()" method="post">
-                    <input id="carId" placeholder="Id"> <br><br>
-                    <input id="carName" placeholder="Name"> <br><br>
-                    <input id="fuelType" placeholder="fuel"><br><br>
-                    <input id="price" placeholder="price"><br><br>
-                    <input id="condition" placeholder="condition"><br><br>
-                    <input id="firstReg" placeholder="firstRegistration"><br><br>
-                    <input id="mileage" placeholder="mileage"><br><br>
-                    <button>Modify Car</button>
-                </form>
-            </div>
-        </div>
-
     </body>
 
 
-
-
-
-
-
-
-
-
-    <script>
-// Attach a submit handler to the form
-
-$("editCars").submit(function(){
-alert('Form is submitting....');
-// Or Do Something...
-$.post("/editCars",
-        {
-           carId: $("#carId").val(),
-          name: $("#carName").val(),
-          fuel:$("#fuelType").val(),
-          price:$("#price").val(),
-          condition:$("#condition").val(),
-          mileage:$("#mileage").val(),
-          firstreg:$("#firstReg").val()
-        },
-        function(data,status){
-            alert("Data: " + data + "\nStatus: " + status);
-        });
-
-});
-</script>
 </html>
