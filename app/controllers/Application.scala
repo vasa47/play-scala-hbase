@@ -1,5 +1,7 @@
 package controllers
 
+import java.io.IOException
+
 import com.sun.corba.se.impl.orbutil.threadpool.TimeoutException
 import play.api.mvc.{Action, Controller}
 import org.apache.hadoop.hbase.{HColumnDescriptor, HTableDescriptor, HBaseConfiguration}
@@ -9,7 +11,8 @@ import play.api.Logger
 import play.api.libs.json.Json
 import java.util.UUID
 import scala.collection.JavaConversions._
-import scala.sys.process.processInternal.IOException
+
+
 
 object Application extends Controller {
 
@@ -92,7 +95,7 @@ object Application extends Controller {
       case e: NullPointerException => println(e.printStackTrace())
     }
 
-    Ok()
+    Ok
   }
 
   // function to delete Car by ID
@@ -122,19 +125,32 @@ object Application extends Controller {
 
     val table = new HTable(hbaseConfig, barsTableName)
     val rowId = request.getQueryString("carId").toString
-    // Just check for the existence of the Car and Report Error if not there
+    // Just check for the existence of the Car get through scanner to return json
     val carData = new Get(Bytes.toBytes(rowId))
     val carModifydata = table.get(carData)
     if((carModifydata == null || carModifydata.isEmpty())) {
       Ok("Not found")
 
     }
+
+    /* no need of the the following lines
+
     val getCarData = new Get(Bytes.toBytes(rowId))
     val carDataList = table.get(getCarData)
-    val results = carDataList.getColumn(family, qualifier)
-    table.close()
-
-
+*/
+    val scan = new Scan()
+    scan.setStartRow(Bytes.toBytes(rowId))
+    scan.setStopRow(Bytes.toBytes(rowId))
+    scan.addColumn(family, qualifier)
+    val scanner = table.getScanner(scan)
+    val results = try {
+      scanner.toList.map {result =>
+        Json.parse(result.getValue(family, qualifier))
+      }
+    } finally {
+      scanner.close()
+      table.close()
+    }
     Ok(Json.toJson(results))
   }
 }
