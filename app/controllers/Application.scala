@@ -98,6 +98,8 @@ object Application extends Controller {
     val table = new HTable(hbaseConfig, barsTableName)
     val rowIdString = request.body.\("carId").toString()
     val rowId = rowIdString.replaceAll("\"", "")
+
+    Logger.info("car Id for the modify operation..."+rowId)
     // Just check for the existence of the Car and Report Error if not there
     val carData = new Get(Bytes.toBytes(rowId))
     val carModifydata = table.get(carData)
@@ -122,6 +124,7 @@ object Application extends Controller {
     val table = new HTable(hbaseConfig, barsTableName)
     val rowIdString = request.body.\("carId").toString()
     val rowId = rowIdString.replaceAll("\"", "")
+    Logger.info("car Id for the modify operation..."+rowId)
     // Just check for the existence of the Car get through scanner to return json
     val carData = new Get(Bytes.toBytes(rowId))
     val carModifydata = table.get(carData)
