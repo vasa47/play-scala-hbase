@@ -8,7 +8,7 @@ Restful WebService Scala, Hbase, Play
 #####
 
 1. view, adding of cars is implement in frontend too.
-2. modify, delete , get a single car data has to be test with curl or RestClients. Please check curl scripts for testing.
+2. modify, delete , get a single car data has to be test with curl or RestClients. Please check curl scripts for testing.(ui just for the sake of display a page)
 
 #####
 
