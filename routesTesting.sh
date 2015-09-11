@@ -5,6 +5,10 @@
 
 curl -X POST -H 'Content-Type: application/json' \
     -d '{"carId":"ff3ed15b-a7d6-430c-9dda-86fac789a201","name":"audi 76","fuel":"disel","price":"11","condition":"used","mileage":"11","firstreg":"yes"}' \
+    localhost:9000/bars
+
+curl -X POST -H 'Content-Type: application/json' \
+    -d '{"carId":"ff3ed15b-a7d6-430c-9dda-86fac789a201","name":"audi 76","fuel":"disel","price":"11","condition":"used","mileage":"11","firstreg":"yes"}' \
     localhost:9000/modifyCar
 
 
